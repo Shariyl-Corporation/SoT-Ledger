@@ -24,8 +24,7 @@ jobs:
 
       - name: warp connection test
         run: |
-          warp-cli status
-          warp-cli get-included-routes
+          ping -c 4 10.10.10.10
           
       - name: sync
         env:
