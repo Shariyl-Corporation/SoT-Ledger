@@ -65,15 +65,11 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                 <div>
                     <InputLabel htmlFor="avatar" value="Avatar" />
 
-                    {/* {JSON.stringify(avatar)} */}
-                    
                     <TextInput
                         id="avatar"
                         className="mt-1 block w-full"
                         placeholder={avatar}
                         disabled
-                        
-                        // hidden
                     />
 
                     <InputError className="mt-2" message={errors.email} />

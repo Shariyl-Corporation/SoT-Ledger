@@ -20,7 +20,8 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call([
-            PossibleUserSeeder::class
+            PossibleUserSeeder::class,
+            RestaurantsAndMenusSeeder::class
         ]);
     }
 }

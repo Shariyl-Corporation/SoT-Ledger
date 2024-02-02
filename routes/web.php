@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\LedgerController;
+use App\Http\Controllers\RestaurantController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -33,6 +35,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/ledger', [LedgerController::class, 'index'])->name('ledger');
+
+    Route::get('/restaurant', [RestaurantController::class, 'index'])->name('restaurant.index');
+    // Route::get('/restaurant', [LedgerController::class, 'index'])->name('restaurant.index');
 });
 
 require __DIR__.'/auth.php';
