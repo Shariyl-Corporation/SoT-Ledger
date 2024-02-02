@@ -40,8 +40,12 @@ jobs:
           </dict>
           " > /var/lib/cloudflare-warp/mdm.xml'
 
+          sudo systemctl status warp-svc
+          
           # Connect to network
-          warp-cli register --accept-tos
+          warp-cli register
+
+         
 
       - name: warp test
         run: |
