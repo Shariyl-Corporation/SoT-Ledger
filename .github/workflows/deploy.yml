@@ -30,13 +30,13 @@ jobs:
           sudo apt install cloudflare-warp
 
           # Creds
-          echo "
+          sudo sh -c 'echo "
           <dict>
             <key>organization</key><string>${{ secrets.CLOUDFLARE_ORGANIZATION }}</string>
             <key>auth_client_id</key><string>${{ secrets.CLOUDFLARE_AUTH_CLIENT_ID }}</string>
             <key>auth_client_secret</key><string>${{ secrets.CLOUDFLARE_AUTH_CLIENT_SECRET }}</string>
           </dict>
-          " > /var/lib/cloudflare-warp/mdm.xml
+          " > /var/lib/cloudflare-warp/mdm.xml'
 
           # login
           warp-cli register
