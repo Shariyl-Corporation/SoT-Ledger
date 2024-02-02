@@ -4,27 +4,36 @@ import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
+import Select from "react-dropdown-select";
 import { Head, Link, useForm } from '@inertiajs/react';
 
-export default function Register() {
+export default function Register({possibleUser}) {
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
         email: '',
+        avatar: '',
         password: '',
         password_confirmation: '',
     });
 
     useEffect(() => {
+        // possibleUser.map(e => e.name += ` - ${e.user == null ? 'N' : ''} R`)
+
         return () => {
             reset('password', 'password_confirmation');
         };
     }, []);
 
+    // useEffect(() => {
+    //     loadDataOnlyOnce();
+    // }, []);
+      
     const submit = (e) => {
         e.preventDefault();
 
         post(route('register'));
     };
+
 
     return (
         <GuestLayout>
@@ -32,7 +41,7 @@ export default function Register() {
 
             <form onSubmit={submit}>
                 <div>
-                    <InputLabel htmlFor="name" value="Name" />
+                    <InputLabel htmlFor="name" value="Name (display name)" />
 
                     <TextInput
                         id="name"
@@ -63,6 +72,24 @@ export default function Register() {
                     />
 
                     <InputError message={errors.email} className="mt-2" />
+                </div>
+
+                <div className="mt-4">
+                    <InputLabel htmlFor="avatar" value="Avatar" />
+
+
+                    {/* {JSON.stringify(possibleUser)} */}
+                    <Select 
+                        options={possibleUser} 
+                        labelField="name" 
+                        valueField="id" 
+                        onChange={(e) => setData('avatar', e[0].id)} //{(values) => data.setValues(values)} 
+                        searchable={false}
+                        dropdownHeight='175px'
+                        required
+                    />
+
+                    <InputError message={errors.avatar} className="mt-2" />
                 </div>
 
                 <div className="mt-4">

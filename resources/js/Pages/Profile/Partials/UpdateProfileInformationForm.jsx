@@ -5,7 +5,7 @@ import TextInput from '@/Components/TextInput';
 import { Link, useForm, usePage } from '@inertiajs/react';
 import { Transition } from '@headlessui/react';
 
-export default function UpdateProfileInformation({ mustVerifyEmail, status, className = '' }) {
+export default function UpdateProfileInformation({ mustVerifyEmail, status, className = '', avatar }) {
     const user = usePage().props.auth.user;
 
     const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
@@ -57,6 +57,23 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                         onChange={(e) => setData('email', e.target.value)}
                         required
                         autoComplete="username"
+                    />
+
+                    <InputError className="mt-2" message={errors.email} />
+                </div>
+
+                <div>
+                    <InputLabel htmlFor="avatar" value="Avatar" />
+
+                    {/* {JSON.stringify(avatar)} */}
+                    
+                    <TextInput
+                        id="avatar"
+                        className="mt-1 block w-full"
+                        placeholder={avatar}
+                        disabled
+                        
+                        // hidden
                     />
 
                     <InputError className="mt-2" message={errors.email} />
