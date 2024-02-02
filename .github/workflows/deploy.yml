@@ -15,7 +15,7 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
 
-      - name: cloudflare warp setup
+      - name: cloudflare warp install
         run: |
           # Add cloudflare gpg key
           curl -fsSL https://pkg.cloudflareclient.com/pubkey.gpg | sudo gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg
@@ -29,6 +29,8 @@ jobs:
           sudo apt-get update && sudo apt-get install cloudflare-warp
           sudo apt install cloudflare-warp
 
+      - name: cloudflare warp run
+        run: |
           # Creds
           sudo sh -c 'echo "
           <dict>
@@ -38,8 +40,8 @@ jobs:
           </dict>
           " > /var/lib/cloudflare-warp/mdm.xml'
 
-          # login
-          warp-cli register
+          # Connect to network
+          warp-cli register --accept-tos
 
       - name: warp test
         run: |
