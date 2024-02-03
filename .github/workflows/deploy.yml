@@ -1,0 +1,64 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+    
+jobs:
+  deploy:
+    env:
+      reponame: SoT-Ledger
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: cloudflare warp setup
+        uses: Boostport/setup-cloudflare-warp@v1
+        with:
+          organization: ${{ secrets.CLOUDFLARE_ORGANIZATION }}
+          auth_client_id: ${{ secrets.CLOUDFLARE_AUTH_CLIENT_ID }}
+          auth_client_secret: ${{ secrets.CLOUDFLARE_AUTH_CLIENT_SECRET }}
+
+      - name: warp connection test
+        run: |
+          ping -c 4 10.10.10.10
+          
+      - name: sync
+        env:
+          dest: "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USER }}/${{ env.reponame }}/"
+        run: |
+          echo "${{secrets.DEPLOY_KEY}}" > ~/deploy_key
+          chmod 600 ~/deploy_key
+          rsync -chav --delete \
+            -e 'ssh -i ~/deploy_key -o StrictHostKeyChecking=no' \
+            --exclude=.git --exclude=.env \
+            --exclude=vendor --exclude=storage \
+            --exclude=node_modules --exclude=*.sqlite \
+            ./ ${{env.dest}}
+
+      - name: install packages
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.DEPLOY_KEY }}
+          port: 22
+          script: |
+            cd /home/${{ secrets.SSH_USER }}/${{ env.reponame }}
+            rm composer.lock
+            composer install
+            npm install
+
+            php artisan migrate --force
+
+      - name: Check the deployed service URL
+        uses: jtalk/url-health-check-action@v3
+        with:
+          # HTTP Health Check for successful deployment testing
+          # Check the following URLs one by one sequentially
+          url: http://shariyl.cloud/sot-ledger/
+          max-attempts: 3 # Optional, defaults to 1
+          retry-delay: 3s # Optional, only applicable to max-attempts > 1
