@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\CloudflareHitController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LedgerController;
 use App\Http\Controllers\RestaurantController;
+use App\Models\CloudflareHitLog;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -38,8 +40,11 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/ledger', [LedgerController::class, 'index'])->name('ledger');
 
+    Route::get('/order', [LedgerController::class, 'index'])->name('order');
+
     Route::get('/restaurant', [RestaurantController::class, 'index'])->name('restaurant.index');
-    // Route::get('/restaurant', [LedgerController::class, 'index'])->name('restaurant.index');
+    
+    Route::get('/cloudflare', [CloudflareHitController::class, 'index'])->name('cloudflare.index');
 });
 
 require __DIR__.'/auth.php';
