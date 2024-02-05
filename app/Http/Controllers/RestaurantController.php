@@ -21,4 +21,19 @@ class RestaurantController extends Controller
             'paginatedRestaurant' => Restaurant::paginate(10)
         ]);
     }
+
+    public function view(Request $request, $id) {
+        return Inertia::render('Restaurant/view', [
+            'restaurant' => Restaurant::find($id),
+        ]);
+    }
+
+    public function update(Request $request) {
+    }
+
+
+    public function delete(Request $request) {
+        
+    }
+
 }

@@ -43,6 +43,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/order', [LedgerController::class, 'index'])->name('order');
 
     Route::get('/restaurant', [RestaurantController::class, 'index'])->name('restaurant.index');
+    Route::get('/restaurant/view/{id}', [RestaurantController::class, 'view'])->name('restaurant.view');
+    Route::get('/restaurant/delete/{id}', [RestaurantController::class, 'delete'])->name('restaurant.delete');
     
     Route::get('/cloudflare', [CloudflareHitController::class, 'index'])->name('cloudflare.index');
 });

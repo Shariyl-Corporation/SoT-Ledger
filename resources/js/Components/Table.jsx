@@ -11,7 +11,16 @@ export default function Table({ items, columns, primary, action }) {
                             {/* <th scope="col" className="px-6 py-3">
                                 <span className="sr-only">Edit</span>
                             </th> */}
-                        <th scope="col" className="px-6 py-3">Action</th>
+                         {
+                            () => {
+                                if (action) {
+                                    return (
+                                        <th scope="col" className="px-6 py-3">Action</th>
+                                        ) 
+                                }
+                                return <div></div>
+                            }
+                        }
                     </tr>
                 </thead>
                 <tbody>
@@ -25,9 +34,22 @@ export default function Table({ items, columns, primary, action }) {
                                     {item[column]}
                                 </td>
                             )}
-                            {/* <td className="px-6 py-4">
-                                <a href={route(action, item.id)} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">View Details</a>
-                            </td> */}
+                            <td className="px-6 py-4">
+                                {
+                                    () => {
+                                        if (action) {
+                                            return (
+                                                <div>
+                                                    <a href={route(action +'.view', item.id)} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">View</a>
+                                                    <a href={route(action +'.delete', item.id)} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</a>
+                                                </div>
+                                            ) 
+                                        }
+                                        return <div></div>
+                                    }
+                                }
+                                
+                            </td>
                         </tr>
                     )}
                 </tbody>

@@ -8,11 +8,11 @@ export default function index({ auth, paginatedRestaurant}) {
             user={auth.user}
             header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Restaurants</h2>}
         >
-            <Head title="Profile" />
+            <Head title="Restaurant" />
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-                    <Table items={paginatedRestaurant.data} columns={['name']} primary='ID'></Table>
+                    <Table items={paginatedRestaurant.data} columns={['name']} primary='ID' action={'restaurant'}></Table>
                 </div>
             </div>
         </AuthenticatedLayout>
