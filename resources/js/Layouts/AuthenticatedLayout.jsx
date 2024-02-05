@@ -30,10 +30,10 @@ export default function Authenticated({ user, header, children }) {
                                 <NavLink href={route('restaurant.index')} active={route().current('restaurant.*')}>
                                     Restaurants
                                 </NavLink>
-                                <NavLink href={route('order')} active={route().current('order')}>
+                                <NavLink href={route('order')} active={route().current('ledger')}>
                                     Create Order
                                 </NavLink>
-                                <NavLink href={route('cloudflare.index')} active={route().current('cloudflare.*')}>
+                                <NavLink href={route('order')} active={route().current('ledger')}>
                                     Cloudflare Hit Log
                                 </NavLink>
                             </div>
