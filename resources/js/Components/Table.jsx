@@ -5,20 +5,17 @@ export default function Table({ items, columns, primary, action }) {
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                         <th scope="col" className="px-6 py-3">{primary}</th>
-                            {
-                                columns.map((column) => <th key={column} scope="col" className="px-6 py-3">{column}</th>)
-                            }
-                            {/* <th scope="col" className="px-6 py-3">
-                                <span className="sr-only">Edit</span>
-                            </th> */}
-                         {
+                        {
+                            columns.map((column) => <th key={column} scope="col" className="px-6 py-3">{column}</th>)
+                        }
+                        {
                             () => {
                                 if (action) {
                                     return (
                                         <th scope="col" className="px-6 py-3">Action</th>
                                         ) 
                                 }
-                                return <div></div>
+                                return ''
                             }
                         }
                     </tr>
@@ -34,22 +31,19 @@ export default function Table({ items, columns, primary, action }) {
                                     {item[column]}
                                 </td>
                             )}
-                            <td className="px-6 py-4">
                                 {
                                     () => {
                                         if (action) {
                                             return (
-                                                <div>
+                                                <td className="px-6 py-4">
                                                     <a href={route(action +'.view', item.id)} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">View</a>
                                                     <a href={route(action +'.delete', item.id)} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</a>
-                                                </div>
+                                                </td>
                                             ) 
                                         }
-                                        return <div></div>
+                                        return ''
                                     }
                                 }
-                                
-                            </td>
                         </tr>
                     )}
                 </tbody>
